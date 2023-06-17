@@ -14,14 +14,32 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    
       - uses: actions/checkout@v2
-
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '7.x'
           include-prerelease: true
-
+- name: Azure Login
+  uses: Azure/login@v1.4.6
+  with:
+    # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+    creds: # optional
+    # ClientId of the Azure Service principal created.
+    client-id: # optional
+    # TenantId of the Azure Service principal created.
+    tenant-id: # optional
+    # Azure subscriptionId
+    subscription-id: # optional
+    # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
+    enable-AzPSSession: # optional
+    # Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
+    environment: # optional, default is azurecloud
+    # Set this value to true to enable support for accessing tenants without subscriptions
+    allow-no-subscriptions: # optional
+    # Provide audience field for access-token. Default value is api://AzureADTokenExchange
+    audience: # optional, default is api://AzureADTokenExchange
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -34,6 +52,8 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
+
+
   deploy:
     runs-on: windows-latest
     needs: build
@@ -44,8 +64,11 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
+
         with:
           name: .net-app
+
+
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
