@@ -11,7 +11,7 @@ var configuration = builder.Configuration.Get<AppConfiguration>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 /*builder.Services.AddInfrastructuresService(configuration!.DatabaseConnection);*/
 builder.Services.AddInfrastructuresService(configuration!.DatabaseConnection);
-builder.Services.AddWebApi();
+builder.Services.AddWebApi(configuration!.JWTSecretKey);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

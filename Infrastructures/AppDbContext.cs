@@ -13,7 +13,7 @@ namespace Infrastructures
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
+            ChangeTracker.LazyLoadingEnabled= true ;
 
         }
         public DbSet<User> User{ get; set; }

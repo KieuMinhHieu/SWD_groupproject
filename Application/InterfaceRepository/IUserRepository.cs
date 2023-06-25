@@ -11,5 +11,6 @@ namespace Application.InterfaceRepository
     {
         Task<bool> CheckPassword(string password);
         Task<bool> CheckEmail(string email);
+        Task<User> FindUserByEmail(string email);
     }
 }

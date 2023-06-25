@@ -22,5 +22,16 @@ namespace WebApi.Controllers
             }
             return Ok();
         }
+        [HttpPost]
+        public async Task<IActionResult> LoginAsync(string email,string password)
+        {
+            var token = await _userService.LoginAsync(email, password);
+            if (token == null)
+            {
+                return BadRequest("Login failed");
+            }
+            return Ok(token);
+        }
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Interface;
 using Application.InterfaceRepository;
+using Application.Util;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,5 +32,11 @@ namespace Infrastructures.Repository
         {
             return await _appDbContext.User.AnyAsync(u => u.Password == password);
         }
+
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await _appDbContext.User.FirstAsync(u => u.Email.Equals(email));
+        }
+       
     }
 }
